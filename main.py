@@ -23,7 +23,7 @@ def PickActivity(options,formerActivity):
         print("Fromer activity was:",formerActivity)
         options[formerActivity] = -2
     return currentChoice,options
-
+# hi its me
 def EditChoice(options):
     ans = input("would you like to add or remove an option? Enter 'add' or 'remove'\n")
     if ans == 'add':
