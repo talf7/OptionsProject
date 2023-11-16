@@ -1,0 +1,2 @@
+{'aaa': -2, 'bbb': -4}
+formerActivity=bbb
