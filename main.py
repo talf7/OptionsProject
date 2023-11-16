@@ -23,32 +23,53 @@ def PickActivity(options,formerActivity):
         print("Fromer activity was:",formerActivity)
         options[formerActivity] = -2
     return currentChoice,options
-# hi its me
-def EditChoice(options):
-    ans = input("would you like to add or remove an option? Enter 'add' or 'remove'\n")
-    if ans == 'add':
-        options = AddChoice(options)
-    elif ans == 'remove':
-        RemoveChoice(options,'y')
+def EditChoice(options, y0rn):
+    while y0rn == 'y':
+        ans = input("would you like to add ,remove or edit an option?\nEnter '1' to add an option\nEnter '2' to remove an option\nEnter '3' to replace an option\nEnter 'n' for no\n")
+        if ans == '1':
+            options = AddChoice(options)
+        elif ans == '2':
+           RemoveChoice(options)
+        elif ans == '3':
+            replaceChoice(options,'y')
+        elif ans == 'n':
+            y0rn == 'n'
+    yOrn = input("would you like to add ,remove or edit another option? 'y' for yes, 'n' for no \n")
+def replaceChoice(options, unwantedChoice, wantedChoice):
+    while ans == 'y':
+        ShowActivities(options)
+        unwantedChoice = input("enter the option you would like to replace:\n")
+        wantedChoice = input("Enter the desired option:\n")
+        options[wantedChoice] = 0
+        del options[unwantedChoice]
+        ans = input("would you like to edit another option? 'y' for yes, 'n' for no \n")
+    return options
 def AddChoice(options):
     yOrn = 'y'
     while yOrn == "y":
         option = input("Enter option:\n")
         if option not in options:
             options[option] = 0
-            yOrn = input("would you like to put another option? yes = 'y', no = 'n'\n")
+            yOrn = input("would you like to put another option?\n'y' for yes\n'n' for no\n")
         else:
             print("The option is already in the pool\n")
     return options
-
-def RemoveChoice(options,ans):
-    while ans == 'y':
-        options.pop()
+def RemoveChoice(options):
         ShowActivities(options)
-        ans = input("would you like to remove another option? yes = 'y', no = 'n'\n")
 
+        option = input("Enter option to remove:\n")
+        if option in options:
+            print("the removed activity is: " + option)
+        else:
+            print("the activity does not exist, please chose one from the list.")
+            RemoveChoice(options)
+
+        del options[option]
+        return options
 def ShowActivities(options):
     print(options.keys())
+
+
 formerActivity = ""
 if not os.path.isfile("options.txt"):
     options = {}
@@ -59,7 +80,7 @@ else:
     formerActivity = fileRead.readline().split("=")[1]
     ShowActivities(options)
     if input("would you like to edit your activities? yes = 'y', no = 'n'\n") == 'y':
-        options = EditChoice(options)
+        options = EditChoice(options,'y')
 
 
 choice , options = PickActivity(options,formerActivity)
