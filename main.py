@@ -32,16 +32,23 @@ def EditChoice(options, y0rn):
            RemoveChoice(options)
         elif ans == '3':
             replaceChoice(options,'y')
-        elif ans == 'n':
-            y0rn == 'n'
-    yOrn = input("would you like to add ,remove or edit another option? 'y' for yes, 'n' for no \n")
-def replaceChoice(options, unwantedChoice, wantedChoice):
+        else:
+            break
+#    yOrn = input("would you like to add ,remove or edit another option? 'y' for yes, 'n' for no \n")
+def replaceChoice(options, unwantedChoice):
+    ans = 'y'
     while ans == 'y':
         ShowActivities(options)
         unwantedChoice = input("enter the option you would like to replace:\n")
-        wantedChoice = input("Enter the desired option:\n")
-        options[wantedChoice] = 0
-        del options[unwantedChoice]
+        if unwantedChoice not in options:
+            print("the option is not in the list so it cant be replaced")
+        else:
+            wantedChoice = input("Enter the desired option:\n")
+            if wantedChoice in options:
+                print("the option is already in the list")
+            else:
+                options[wantedChoice] = 0
+                del options[unwantedChoice]
         ans = input("would you like to edit another option? 'y' for yes, 'n' for no \n")
     return options
 def AddChoice(options):
@@ -79,8 +86,12 @@ else:
     options = eval(fileRead.readline())
     formerActivity = fileRead.readline().split("=")[1]
     ShowActivities(options)
-    if input("would you like to edit your activities? yes = 'y', no = 'n'\n") == 'y':
+    answer = input("would you like to edit your activities? yes = 'y', no = 'n'\n")
+    if answer == 'y':
         options = EditChoice(options,'y')
+    elif answer == 'n':
+        PickActivity(options, formerActivity)
+
 
 
 choice , options = PickActivity(options,formerActivity)

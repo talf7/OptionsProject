@@ -1,2 +1,2 @@
-{'aaa': -4, 'bbb': -2}
-formerActivity=aaa
+{'aaa': -2, 'bbb': -4}
+formerActivity=bbb
