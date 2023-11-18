@@ -14,6 +14,7 @@ def PickActivity(options,formerActivity):
         options[currentChoice] += 1
         if options[currentChoice] == 3:
             print("The choice that has been made is:", currentChoice)
+            ChosenActivityHistory.append(currentChoice)
             break
         print("Current score is: ",options)
         #time.sleep(5)
@@ -24,6 +25,18 @@ def PickActivity(options,formerActivity):
         print("Fromer activity was:",formerActivity)
         options[formerActivity] = -2
     return currentChoice,options
+
+def mainMenu(options, y0rn = 'y'):
+    while y0rn == 'y':
+        ans = input("---------------------------\nmain menu, type:\n'1' for runing the program type \n'2' for the history of activities type \n'3'for editing options type \n'4'for editing options histroy type \n")
+        if ans == '1':
+            PickActivity(options, formerActivity)
+        if ans == '2':
+            ShowChosenActivityHistory(ChosenActivityHistory)
+        if ans == '3':
+            ShowHistoryOptins(OptionsHistory)
+        if ans == '4':
+            EditChoice(options, y0rn)
 def EditChoice(options, y0rn):
     while y0rn == 'y':
         ans = input("would you like to add ,remove or replace an option?\nEnter '1' to add an option\nEnter '2' to remove an option\nEnter '3' to replace an option\nEnter 'n' for no\n")
@@ -47,6 +60,7 @@ def replaceChoice(options, unwantedChoice):
         if wantedChoice in options:
             print("the option is already in the list")
         else:
+            OptionsHistory.append("replace " + unwantedChoice + "with " + wantedChoice)
             options[wantedChoice] = 0
             del options[unwantedChoice]
     return options
@@ -54,6 +68,7 @@ def AddChoice(options):
     option = input("Enter option:\n")
     if option not in options:
         options[option] = 0
+        OptionsHistory.append("add " + option)
     else:
         print("The option is already in the pool\n")
     return options
@@ -63,6 +78,7 @@ def RemoveChoice(options):
         option = input("Enter option to remove:\n")
         if option in options:
             print("the removed activity is: " + option)
+            OptionsHistory.append("remove " + option)
         else:
             print("the activity does not exist, please chose one from the list.")
             RemoveChoice(options)
@@ -71,35 +87,41 @@ def RemoveChoice(options):
         return options
 def ShowActivities(options):
     print(options.keys())
-
-
-formerActivity = ""
-
-
+def ShowHistoryOptins(OptionsHistory):
+    print("options history is " + ",".join(str(element) for element in OptionsHistory))
+def ShowChosenActivityHistory(ChosenActivityHistory):
+    print("History of chosen activities: " + ",".join(str(element) for element in ChosenActivityHistory))
 def Initialize(options):
     firstOption = input("Enter your first option to add\n")
+    OptionsHistory.append("add " + firstOption)
     options[firstOption] = 0
     return EditChoice(options,'y')
 
 
-
+ChosenActivityHistory = []
+OptionsHistory = []
+formerActivity = ""
 if not os.path.isfile("options.txt"):
     options = {}
     options = Initialize(options)
 else:
     fileRead = open("options.txt","r")
     options = eval(fileRead.readline())
-    formerActivity = fileRead.readline().split("=")[1]
+    #formerActivity = fileRead.readline().split("=")[1]
     ShowActivities(options)
-    answer = input("would you like to edit your activities? yes = 'y', no = 'n'\n")
-    if answer == 'y':
-        options = EditChoice(options,'y')
-    elif answer == 'n':
-        PickActivity(options, formerActivity)
+    mainMenu(options)
+
+    #answer = input("would you like to edit your activities? yes = 'y', no = 'n'\n")
+    #if answer == 'y':
+    #    options = EditChoice(options,'y')
+    #elif answer == 'n':
+    #    PickActivity(options, formerActivity)
+
+
 
 choice , options = PickActivity(options,formerActivity)
 f = open("options.txt","w")
-f.write(str(options) + "\nformerActivity=" + choice)
-
+f.write(str(options))
+f.write("\nActivity history =" + ",".join(str(element) for element in ChosenActivityHistory) + "\nChanges history =" + ",".join(str(element) for element in OptionsHistory))
 f.close()
 
