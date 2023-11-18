@@ -1,0 +1,2 @@
+{'PS': 0, 'rubik': -2}
+formerActivity=rubik
