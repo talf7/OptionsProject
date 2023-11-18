@@ -7,7 +7,8 @@ import time
 import os.path
 
 
-def PickActivity(options,formerActivity):
+def PickActivity(options,OptionsHistory):
+    formerActivity = OptionsHistory[-1]
     while True:
         print(options)
         currentChoice = random.choice(list(options.keys()))
@@ -26,19 +27,29 @@ def PickActivity(options,formerActivity):
         options[formerActivity] = -2
     return currentChoice,options
 
-def mainMenu(options, y0rn = 'y'):
-    while y0rn == 'y':
-        ans = input("---------------------------\nmain menu, type:\n'1' for runing the program type \n'2' for the history of activities type \n'3'for editing options type \n'4'for editing options histroy type \n")
+def mainMenu(options, OptionsHistory):
+    while True:
+        ans = input("---------------------------\nmain menu, type:\n'1' for runing the program \n'2' for the history of activities \n'3'for histroy of editing options \n'4'for editing options \n")
         if ans == '1':
-            PickActivity(options, formerActivity)
+            PickActivity(options, OptionsHistory)
+            choice, options = PickActivity(options, formerActivity)
+            f = open("options.txt", "w")
+            f.write(str(options))
+            f.write("\nActivity history =" + ",".join(
+                str(element) for element in ChosenActivityHistory) + "\nChanges history =" + ",".join(
+                str(element) for element in OptionsHistory))
+            f.close()
+
         if ans == '2':
             ShowChosenActivityHistory(ChosenActivityHistory)
         if ans == '3':
             ShowHistoryOptins(OptionsHistory)
         if ans == '4':
             EditChoice(options, y0rn)
+        if ans == '5':
+            break
 def EditChoice(options, y0rn):
-    while y0rn == 'y':
+    while True:
         ans = input("would you like to add ,remove or replace an option?\nEnter '1' to add an option\nEnter '2' to remove an option\nEnter '3' to replace an option\nEnter 'n' for no\n")
         if ans == '1':
             options = AddChoice(options)
@@ -98,16 +109,19 @@ def Initialize(options):
     return EditChoice(options,'y')
 
 
-ChosenActivityHistory = []
-OptionsHistory = []
+
 formerActivity = ""
 if not os.path.isfile("options.txt"):
     options = {}
+    ChosenActivityHistory = []
+    OptionsHistory = []
     options = Initialize(options)
 else:
     fileRead = open("options.txt","r")
     options = eval(fileRead.readline())
-    #formerActivity = fileRead.readline().split("=")[1]
+    ChosenActivityHistory = []
+    OptionsHistory = fileRead.readline().split("=")[1].split(",")
+
     ShowActivities(options)
     mainMenu(options)
 
@@ -119,9 +133,4 @@ else:
 
 
 
-choice , options = PickActivity(options,formerActivity)
-f = open("options.txt","w")
-f.write(str(options))
-f.write("\nActivity history =" + ",".join(str(element) for element in ChosenActivityHistory) + "\nChanges history =" + ",".join(str(element) for element in OptionsHistory))
-f.close()
 
