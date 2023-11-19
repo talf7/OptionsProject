@@ -1,3 +1,4 @@
-{'rubik': 0, 'HC': 0, 'against the storm': 0, 'coding with fischer': 0, 'Frost': -4, 'Brotato': 0, 'spirit island': -2}
-formerActivity=Frost
-{'rubik': 0, 'HC': 0, 'against the storm': 0, 'spirit island': 1, 'coding with fischer': 0, 'Frost': 1, 'Brotato': 0}
+{'111': -4}
+formerActivity=111
+{'111': 1}
+[]
