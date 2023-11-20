@@ -16,9 +16,11 @@ def UpdateFile():
         options = eval(content[0])
         formerActivity = content[1].split("=")[1][0:-1]
         statistics = eval(content[2])
-        optionsHistory = content[3]
-        chosenActivityLog = content[4]
-        Show(options)
+        global optionsHistory
+        optionsHistory = content[3][1:-2].replace("'","").split(",")
+        global chosenActivityLog
+        chosenActivityLog = content[4][1:-2].replace("'","").replace(" ","")
+        chosenActivityLog = "".join(chosenActivityLog.split()).split(",")
         fileRead.close()
 
     choice, options = MainMenu(options, statistics, formerActivity)
@@ -97,7 +99,7 @@ def replaceChoice(options, statistics=None):
         else:
             options[wantedChoice] = 0
             statistics[wantedChoice] = 0
-            optionsHistory.append(unwantedChoice + "repleaced with " + wantedChoice)
+            optionsHistory.append(unwantedChoice + " replaced with " + wantedChoice)
             del options[unwantedChoice]
     return options
 def AddChoice(options, statistics={}):
