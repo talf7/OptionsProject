@@ -1,21 +1,22 @@
 import random
 import time
-import os.path
+import os
 
 chosenActivityLog = []
 optionsHistory = []
 def UpdateFile():
     if not os.path.isfile("options.txt"):
         options = {}
-        statistics = {}
+        winingStatistics = {}
+        winRate = {}
         formerActivity = ""
-        options = Initialize(options, statistics)
+        options = Initialize(options, winRate)
     else:
         fileRead = open("options.txt", "r")
         content = fileRead.readlines()
         options = eval(content[0])
         formerActivity = content[1].split("=")[1][0:-1]
-        statistics = eval(content[2])
+        winRate = eval(content[2])
         global optionsHistory
         optionsHistory = content[3][1:-2].replace("'","").split(",")
         global chosenActivityLog
@@ -23,36 +24,44 @@ def UpdateFile():
         chosenActivityLog = "".join(chosenActivityLog.split()).split(",")
         fileRead.close()
 
-    choice, options = MainMenu(options, statistics, formerActivity)
+    choice, options = MainMenu(options, winRate, formerActivity)
+    if choice == None:
+        optionsHistory = []
+        chosenActivityLog = []
+        UpdateFile()
+        return
     f = open("options.txt", "w")
-    print(statistics)
-    list = [str(options) ,'\n' ,"formerActivity=" + choice ,'\n', str(statistics) ,'\n', str(optionsHistory),'\n', str(chosenActivityLog)]
+    print(winRate)
+    list = [str(options) ,'\n' ,"formerActivity=" + choice ,'\n', str(winRate) ,'\n', str(optionsHistory),'\n', str(chosenActivityLog)]
     f.writelines(list)
     f.close()
 
-#main menu not working yet
-def MainMenu(options,statistics, formerActivity= ""):
+def MainMenu(options, winRate, formerActivity= ""):
     while True:
-        ans = input("Type:\n'1' to run the progrem.\n'2' to edit the options.\n'3' for statistics\n'4' for options history\n")
+        ans = input("Type:\n'1' to run the progrem.\n'2' to edit the options.\n'3' for statistics\n'4' for options history\n'5' for reset options.\n")
         match ans:
             case '1':
-                currentChoice, options = PickActivity(options, formerActivity, statistics)
+                currentChoice, options = PickActivity(options, formerActivity, winRate)
                 break
             case '2':
-                options = EditChoice(options, statistics)
+                options = EditChoice(options, winRate)
             case '3':
-                print(statistics)
+                print(winRate)
             case '4':
                 print(optionsHistory)
+            case '5':
+                if os.path.isfile("options.txt"):
+                    os.remove("options.txt")
+                return None,None
     return currentChoice, options
 
-def Initialize(options, statistics=None):
+def Initialize(options, winRate=None):
     firstOption = input("Enter your first option to add\n")
     options[firstOption] = 0
-    statistics[firstOption] = 0
+    winRate[firstOption] = 0
     optionsHistory.append("add " + firstOption)
     return options
-def PickActivity(options, formerActivity, statistics=None):
+def PickActivity(options, formerActivity, winRate=None):
     print("starting score is: ",options)
     counter = 1
     while True:
@@ -63,10 +72,10 @@ def PickActivity(options, formerActivity, statistics=None):
         if options[currentChoice] == 3:
             print("The choice that has been made is:", currentChoice)
             chosenActivityLog.append(currentChoice)
-            statistics[currentChoice] += 1
+            winRate[currentChoice] += 1
             break
         print("Current score is: ",options)
-        #time.sleep(5)
+        time.sleep(5)
     for x in options:
         options[x] = 0
     options[currentChoice] = -4
@@ -74,20 +83,20 @@ def PickActivity(options, formerActivity, statistics=None):
         print("Fromer activity was:",formerActivity)
         options[formerActivity] = -2
     return currentChoice,options
-def EditChoice(options, statistics=None):
+def EditChoice(options, winRate=None):
     while True:
         ans = input("edit options, type:\n'1' to add an option\n'2' to remove an option\n'3' to replace an option\n'4' to continue\n")
         match ans:
             case '1':
-                options = AddChoice(options, statistics)
+                options = AddChoice(options, winRate)
             case '2':
                 options = RemoveChoice(options)
             case '3':
-                options = replaceChoice(options, statistics)
+                options = replaceChoice(options, winRate)
             case '4':
                 break
     return options
-def replaceChoice(options, statistics=None):
+def replaceChoice(options, winRate=None):
     Show(options)
     unwantedChoice = input("enter the option you would like to replace:\n")
     if unwantedChoice not in options:
@@ -98,16 +107,16 @@ def replaceChoice(options, statistics=None):
             print("the option is already in the list")
         else:
             options[wantedChoice] = 0
-            statistics[wantedChoice] = 0
+            winRate[wantedChoice] = 0
             optionsHistory.append(unwantedChoice + " replaced with " + wantedChoice)
             del options[unwantedChoice]
     return options
-def AddChoice(options, statistics={}):
+def AddChoice(options, winRate={}):
     option = input("Enter option:\n")
     print("the option is: " + option)
     if option not in options:
         options[option] = 0
-        statistics[option] = 0
+        winRate[option] = 0
         optionsHistory.append("add " + option)
     else:
         print("The option is already in the pool\n")
