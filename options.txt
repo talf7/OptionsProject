@@ -1,5 +1,5 @@
-{'111': 0, '222': -4}
-formerActivity=222
-{'111': 0, '222': 1}
-['add 111', 'add 222']
-['222']
+{'rubik': 0, 'hellcard': 0, 'slay the spire': -4, 'tea with fischer or fishcer?': 0, 'rocket league': -2, 'coding with tal': 0}
+formerActivity=slay the spire
+{'rubik': 1, 'hellcard': 0, 'slay the spire': 1, 'tea with fischer or fishcer?': 0, 'rocket league': 1, 'coding with tal': 0}
+['add rubik', '  add hellcard', '  add slay the spire', '  add tea with fischer or fishcer?', '  add rocket league', '  add coding with tal']
+['rubik', 'rocketleague', 'slay the spire']
