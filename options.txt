@@ -1,0 +1,5 @@
+{'PS': 0, 'poker': -4, 'rubik': 0, 'yoyo': -2}
+formerActivity=poker
+{'yoyo': 2, 'hell': 0, 'PS': 0, 'poker': 1, 'rubik': 0}
+['add yoyo', 'add hell', 'remove yoyo', 'hellrepleaced with PS', 'add poker', 'add rubik']
+['yoyo', 'yoyo', 'poker']
