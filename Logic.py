@@ -1,6 +1,6 @@
 import random
 import time
-import os.path
+import os
 
 chosenActivityLog = []
 optionsHistory = []
@@ -24,6 +24,11 @@ def UpdateFile():
         fileRead.close()
 
     choice, options = MainMenu(options, statistics, formerActivity)
+    if choice == None:
+        optionsHistory = []
+        chosenActivityLog = []
+        UpdateFile()
+        return
     f = open("options.txt", "w")
     print(statistics)
     list = [str(options) ,'\n' ,"formerActivity=" + choice ,'\n', str(statistics) ,'\n', str(optionsHistory),'\n', str(chosenActivityLog)]
@@ -33,7 +38,7 @@ def UpdateFile():
 #main menu not working yet
 def MainMenu(options,statistics, formerActivity= ""):
     while True:
-        ans = input("Type:\n'1' to run the progrem.\n'2' to edit the options.\n'3' for statistics\n'4' for options history\n")
+        ans = input("Type:\n'1' to run the progrem.\n'2' to edit the options.\n'3' for statistics\n'4' for options history\n'5' for reset options.\n")
         match ans:
             case '1':
                 currentChoice, options = PickActivity(options, formerActivity, statistics)
@@ -44,6 +49,9 @@ def MainMenu(options,statistics, formerActivity= ""):
                 print(statistics)
             case '4':
                 print(optionsHistory)
+            case '5':
+                os.remove("options.txt")
+                return None,None
     return currentChoice, options
 
 def Initialize(options, statistics=None):
