@@ -1,6 +1,6 @@
-The options are = {'111': -4, '222': 0, '333': 0, ' 222': -2}
-Former activity = 111
-Activities score = {'111': 1, '222': 1, '333': 0}
-History of changes in options = ['[add:111', 'add:222', 'add:333']
-Chosen activities log = ['[222', '111']
-Wining statistics = {'111': '50.0%', '222': '50.0%', '333': '0.0%'}
+The options are = {'111': 0, '222': -4, '333': 0, ' 222': 0, ' 111': -2}
+Former activity = 222
+Activities score = {'111': 1, '222': 2, '333': 0}
+History of changes in options = ['[[add:111', 'add:222', 'add:333']
+Chosen activities log = ['[[222', '111', '222']
+Wining statistics = {'111': '33.3%', '222': '66.7%', '333': '0.0%'}
