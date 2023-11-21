@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aad033d3-f66a-4140-8fdc-d4bc89d6bcd2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic.py" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+=======
+>>>>>>> 0252476e5277c470b2a1046a5a91515ae6b43f81
       <change beforePath="$PROJECT_DIR$/options.txt" beforeDir="false" afterPath="$PROJECT_DIR$/options.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +42,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+<<<<<<< HEAD
     "git-widget-placeholder": "Merging main"
+=======
+    "git-widget-placeholder": "master"
+>>>>>>> 0252476e5277c470b2a1046a5a91515ae6b43f81
   }
 }]]></component>
   <component name="RunManager" selected="Python.main">
