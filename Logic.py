@@ -2,6 +2,7 @@ import math
 import random
 import time
 import os
+from colorama import Fore, Back, Style
 
 favoredChoice = None
 winingStatistics = {}
@@ -88,11 +89,13 @@ def PickActivity(options, winRate=None):
     while True:
         currentChoice = random.choice(list(options.keys()))
         print(f"roll number: {counter}")
-        print(f"chosen: {currentChoice}")
+        print("chosen: " + Fore.BLUE + currentChoice)
+        print(Style.RESET_ALL)
         counter += 1
         options[currentChoice] += 1
         if options[currentChoice] == 5:
-            print("The choice that has been made is: " + currentChoice)
+            print("The choice that has been made is:" + Fore.GREEN + currentChoice)
+            print(Style.RESET_ALL)
             favoredChoice = None
             chosenActivityLog.append(currentChoice)
             winRate[currentChoice] += 1
