@@ -1,6 +1,0 @@
-The options are = {'222': 0, '333': -4, '111': -2}
-Former activity= 333
-choice's score = {'111': 2, '222': 1, '333': 2}
-History of changes in the options = ["['add111','add222','add333']", 'remove:111']
-['333', '111', '222', '111', '333']
-{'111': '40.0%', '222': '20.0%', '333': '40.0%'}
