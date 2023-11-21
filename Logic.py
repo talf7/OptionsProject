@@ -2,12 +2,9 @@ import random
 import time
 import os
 
-favoredChoice = None
 winingStatistics = {}
 chosenActivityLog = []
 optionsHistory = []
-
-
 def UpdateFile():
     if not os.path.isfile("options.txt"):
         options = {}
@@ -15,16 +12,17 @@ def UpdateFile():
         formerActivity = ""
         options = Initialize(options, winRate)
     else:
+        global optionsHistory, chosenActivityLog, winingStatistics
+
         fileRead = open("options.txt", "r")
         content = fileRead.readlines()
-        options = eval(content[0].split("=")[1])
-        formerActivity = content[1].split("=")[1][0:-1]
-        winRate = eval(content[2].split("=")[1])
-        global optionsHistory, chosenActivityLog, winingStatistics
-        optionsHistory = str(content[3].split("=")[1])[1:-2].replace("'","").replace(" ","").split(",")
-        chosenActivityLog = content[4].split("=")[1][1:-2].replace("'","").replace(" ","")
+        options = eval((content[0]).split("= ")[1])
+        formerActivity = content[1].split("= ")[1][0:-1]
+        winRate = eval((content[2]).split("= ")[1])
+        optionsHistory = content[3].split("= ")[1][0:-1].replace(" ","")
+        chosenActivityLog = content[4][1:-2].replace("'","").replace(" ","")
         chosenActivityLog = "".join(chosenActivityLog.split()).split(",")
-        winingStatistics = eval(content[5].split("=")[1])
+        winingStatistics = eval(content[5])
         fileRead.close()
     choice, options = MainMenu(options, winRate, formerActivity)
     if choice == None:
@@ -33,16 +31,16 @@ def UpdateFile():
         UpdateFile()
         return
     f = open("options.txt", "w")
-    print("Activity wining score: " + str(winRate))
+    print(winRate)
 
     winRate.keys
-    list = ["The options are = " + str(options) ,'\n',"Former activity = " + choice ,'\n', "Activities score = " + str(winRate) ,'\n', "History of changes in options = " + str(optionsHistory),'\n', "Chosen activities log = " + str(chosenActivityLog),'\n', "Wining statistics = " + str(winingStatistics)]
+    list = ["The options are = " + str(options) ,'\n' ,"Former activity= " + choice ,'\n', "choice's score = " + str(winRate) ,'\n',"History of changes in the options = " + str(optionsHistory),'\n', str(chosenActivityLog),'\n', str(winingStatistics)]
     f.writelines(list)
     f.close()
 
 def MainMenu(options, winRate, formerActivity= ""):
     while True:
-        ans = input("Type:\n'1' to run the progrem.\n'2' to edit the options.\n'3' for win rate and statistics\n'4' for options history\n'5' for reset options.\n")
+        ans = input("Type:\n'1' to run the progrem.\n'2' to edit the options.\n'3' for statistics\n'4' for options history\n'5' for reset options.\n")
         match ans:
             case '1':
                 currentChoice, options = PickActivity(options, formerActivity, winRate)
@@ -51,7 +49,6 @@ def MainMenu(options, winRate, formerActivity= ""):
                 options = EditChoice(options, winRate)
             case '3':
                 print(winRate)
-                print(winingStatistics)
             case '4':
                 print(optionsHistory)
             case '5':
@@ -65,7 +62,7 @@ def Initialize(options, winRate=None):
     options[firstOption] = 0
     winRate[firstOption] = 0
     winingStatistics[firstOption] = 0
-    optionsHistory.append("add:" + firstOption)
+    optionsHistory.append("add " + firstOption)
     return options
 def PickActivity(options, formerActivity, winRate=None):
     print("starting score is: ",options)
@@ -80,6 +77,8 @@ def PickActivity(options, formerActivity, winRate=None):
             chosenActivityLog.append(currentChoice)
             winRate[currentChoice] += 1
             for keys in winRate:
+                print(keys)
+                print(winRate.values())
                 winingStatistics[keys] = "{:.1f}".format((winRate[keys] / len(chosenActivityLog)) * 100) + "%"
             break
         print("Current score is: ",options)
@@ -118,7 +117,7 @@ def replaceChoice(options, winRate=None):
             winRate[wantedChoice] = 0
             if wantedChoice not in winingStatistics:
                 winingStatistics[wantedChoice] = 0
-            optionsHistory.append(unwantedChoice + "->replaced_by:" + wantedChoice)
+            optionsHistory.append(unwantedChoice + "->replaced-by: " + wantedChoice)
             del options[unwantedChoice]
     return options
 def AddChoice(options, winRate={}):
@@ -146,6 +145,6 @@ def RemoveChoice(options):
             RemoveChoice(options)
         return options
 def Show(dict):
-    print("The options are :" + str(dict.keys()).split("(")[1].split(")")[0])
+    print(dict.keys())
 
 
