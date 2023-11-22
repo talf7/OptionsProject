@@ -103,17 +103,24 @@ def PickActivity(options, winRate=None):
                 winingStatistics[keys] = "{:.1f}".format((winRate[keys] / len(chosenActivityLog)) * 100) + "%"
             break
         print("Current score is: ",options)
-        time.sleep(5)
+        #time.sleep(5)
     for x in options:
         options[x] = 0
-    counter = int(math.log2(len(options)))
-    for activity in reversed(chosenActivityLog):
-        if counter <= 0:
-            break
-        if activity in options:
-            if options[activity] == 0:
-                options[activity] = -counter
-                counter -= 1
+    size = int(math.log2(len(options)))
+    for i in reversed(range(len(chosenActivityLog))):
+        currentActivity = chosenActivityLog[i]
+        if currentActivity in options:
+            minusForWinner = 0
+            while i >= 0:
+                if chosenActivityLog[i] == chosenActivityLog[i - 1]:
+                    minusForWinner += 1
+                    i -= 1
+                else:
+                    break
+            options[currentActivity] -= size - minusForWinner
+            size -= 1
+            if size <= 0:
+                break
 
     return currentChoice,options
 def EditChoice(options, winRate=None):

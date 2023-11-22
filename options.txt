@@ -1,0 +1,6 @@
+The options are = {'tal': -2, 'shilo': 0}
+Former activity = tal
+choice's score = {'tal': 9, 'shilo': 2}
+History of changes in options = ['add:tal', 'add:shilo']
+Chosen activity log = ['tal', 'tal', 'tal', 'tal', 'tal', 'tal', 'shilo', 'tal', 'shilo', 'tal', 'tal']
+Wining statistics = {'tal': '81.8%', 'shilo': '18.2%', 'max': '11.9%', '111': '0.0%', '222': '3.4%', '333': '6.8%', '444': '5.1%', '555': '5.1%'}
