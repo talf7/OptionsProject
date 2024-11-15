@@ -1,6 +1,0 @@
-The options are = {'321': -2, 'shilo': 0, '10101': 0}
-Former activity = 321
-choice's score = {'123': 2, '321': 9, 'shilo': 9, '10101': 7}
-History of changes in options = ['add:123', 'add:321', 'add:shilo', '123->replaced-by:10101']
-Chosen activity log = ['321', '123', '321', '123', '321', 'shilo', 'shilo', '10101', '10101', 'shilo', '321', 'shilo', '10101', 'shilo', '10101', '321', '10101', 'shilo', '321', '10101', 'shilo', 'shilo', '10101', '321', 'shilo', '321', '321']
-Wining statistics = {'123': '7.4%', '321': '33.3%', 'shilo': '33.3%', '10101': '25.9%'}

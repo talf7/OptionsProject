@@ -16,7 +16,7 @@ def UpdateFile():
         options = {}
         winRate = {}
         formerActivity = ""
-        options = E.AddChoice(options, winRate)
+        options = AddChoice(options, winRate)
     else:
         fileRead = open("options.txt", "r")
         content = fileRead.readlines()
@@ -48,7 +48,7 @@ def UpdateFile():
 def MainMenu(options, winRate):
     global winingStatistics
     while True:
-        ans = input("Type:\n'1' To run the progrem.\n'2' To edit the options.\n'3' For win rate and statistics\n'4' For options history\n'5' For reset options.\n'6' For choosing favored option.\n")
+        ans = input("Type:\n'1' To run the program.\n'2' To edit the options.\n'3' For win rate and statistics\n'4' For options history\n'5' For reset options.\n'6' For choosing favored option.\n")
         match ans:
             case '1':
                 currentChoice, options = PickActivity(options, winRate)
@@ -62,9 +62,14 @@ def MainMenu(options, winRate):
                 print(optionsHistory)
             case '5':
                 if os.path.isfile("options.txt"):
+                    print("hi")
                     os.remove("options.txt")
-                    winingStatistics = {}
-                return None,None
+
+                else:
+                    options = {}
+                winingStatistics = {}
+                winRate = None
+                MainMenu(options, winRate)
             case '6':
                 Favored(options)
     return currentChoice, options
@@ -130,7 +135,8 @@ def EditChoice(options, winRate=None):
 def AddChoice(options, winRate=None):
     option = ""
     while option != "q":
-        Show(options)
+        if options is not {}:
+            Show(options)
         option = input("Enter an option to add, type 'q' to go to main menu.\n")
         if option not in options and option != "q":
             options[option] = 0
@@ -176,7 +182,8 @@ def Show(dict):
     outputList = []
     for key in dict.keys():
         outputList.append(key)
-    print(outputList)
+        if outputList is not []:
+            print("your options are: " + str(outputList))
 
 def Favored(options):
     global favoredChoice
